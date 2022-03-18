@@ -34,8 +34,8 @@ class ProdutoController extends Controller
         $produto->preco = str_replace(',', '.', str_replace('.', '', $produto->preco));
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $ext = pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $produto->path_foto = '/produto/'.$produto->sku.'.'.$ext;
-            $request->file('file')->storeAs('/produto', $produto->sku.'.'.$ext);
+            $produto->path_foto = 'produto/'.$produto->sku.'.'.$ext;
+            $request->file('file')->storeAs('/public/produto', $produto->sku.'.'.$ext);
         }
         $produto->save();
     }

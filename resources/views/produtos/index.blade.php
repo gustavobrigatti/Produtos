@@ -1,4 +1,13 @@
 @extends('app')
+@push('scripts')
+    <script>
+        $('#user-list-table').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.11.1/i18n/pt_br.json"
+            }
+        });
+    </script>
+@endpush
 @section('content')
     <!-- [ breadcrumb ] start -->
     <div class="page-header">
@@ -21,7 +30,7 @@
     <div class="row">
         <!-- Zero config table start -->
         <div class="col-sm-12">
-            <div class="card">
+            <div class="card user-profile-list">
                 <div class="card-header">
                     <div class="d-none d-sm-block">
                         <h5>Produtos</h5>
@@ -39,13 +48,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body table-border-style">
+                <div class="card-body">
                     <div class="dt-responsive table-responsive">
-                        <table id="simpletable" class="table table-striped table-bordered nowrap">
+                        <table id="user-list-table" class="table nowrap" style="border-spacing: 0 10px;">
                             <thead>
                             <tr>
-                                <th>Nome</th>
-                                <th>SKU</th>
+                                <th>Nome/SKU</th>
                                 <th>Preço</th>
                                 <th>Estoque</th>
                                 <th class="text-center" style="width: 20%">Ações</th>
@@ -54,18 +62,25 @@
                             <tbody>
                             @foreach($produtos AS $produto)
                                 <tr>
-                                    <td class="align-middle">{{ $produto->nome_produto }}</td>
-                                    <td class="align-middle">{{ $produto->sku }}</td>
+                                    <td>
+                                        <div class="d-inline-block align-middle">
+                                            @if($exists = Storage::disk('public')->exists($produto->path_foto))
+                                                <img src="/storage/{{ $produto->path_foto }}" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
+                                            @else
+                                                <img src="/images/user.png" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
+                                            @endif
+                                            <div class="d-inline-block">
+                                                <h6 class="m-b-0">{{ $produto->nome_produto }}</h6>
+                                                <p class="m-b-0">{{ $produto->sku }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td class="align-middle">R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
                                     <td class="align-middle">{{ $produto->estoque }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('produtos.edit', $produto->hash_id) }}" class="btn btn-sm btn-primary">
-                                            <i class="fa fa-folder"></i> Editar
-                                        </a>
-                                        <a href="javascript:document.getElementById('excluir{{ $produto->id }}').submit();" id="btnexcluir{{ $produto->id }}" type="button" class="btn btn-danger btn-sm confirmBtn">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        <form id="excluir{{ $produto->id }}" action="{{ route('produtos.destroy', $produto->hash_id)  }}"
+                                        <a href="{{ route('produtos.edit', $produto->hash_id) }}" class="btn btn-icon btn-primary"><i class="feather icon-folder"></i></a>
+                                        <a href="javascript:document.getElementById('excluir{{$produto->id}}').submit();" id="btnexcluir{{$produto->id}}" class="btn btn-icon btn-danger confirmBtn"><i class="feather icon-trash-2"></i></a>
+                                        <form id="excluir{{$produto->id}}" action="{{ route('produtos.destroy', $produto->hash_id)  }}"
                                               method="POST">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="DELETE"/>
@@ -76,8 +91,7 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Nome</th>
-                                <th>SKU</th>
+                                <th>Nome/SKU</th>
                                 <th>Preço</th>
                                 <th>Estoque</th>
                                 <th class="text-center" style="width: 20%">Ações</th>
