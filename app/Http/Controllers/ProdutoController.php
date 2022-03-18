@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -54,6 +55,7 @@ class ProdutoController extends Controller
 
     public function destroy($id){
         $produto = Produto::findOrFail($id);
+        Storage::delete('/public/'.$produto->path_foto);
         $produto->delete();
         return redirect()->route('produtos.index')->with('alert', 'Produto excluído com sucesso.');
     }
