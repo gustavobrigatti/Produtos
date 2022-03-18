@@ -47,7 +47,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
-            Route::bind('cadastro', function($value, $route) {
+            Route::bind('produto', function($value, $route) {
                 return Hashids::decode($value)[0] ?? 0;
             });
         });

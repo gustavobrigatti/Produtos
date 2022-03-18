@@ -101,10 +101,10 @@
 
             <div class="">
                 <div class="main-menu-header">
-                    <img class="img-radius" style="border-radius: 0" src="/public/images/eu.jpg" alt="User-Profile-Image">
-                    <div class="user-details tresPontos">
-                        <div id="more-details">Gustavo Rosolen Brigatti <i class="fa fa-caret-down"></i></div>
-                    </div>
+                    <img class="img-radius" src="/images/eu.jpg" alt="User-Profile-Image">
+                    <a href="https://www.linkedin.com/in/gustavo-rosolen-brigatti/" class="user-details tresPontos" target="_blank">
+                        Gustavo Rosolen Brigatti
+                    </a>
                 </div>
             </div>
 
@@ -113,7 +113,7 @@
                     <label>Navegação</label>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/') }}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                    <a href="{{ route('produtos.index') }}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-barcode"></i></span><span class="pcoded-mtext">Produtos</span></a>
                 </li>
             </ul>
         </div>
@@ -300,41 +300,7 @@
         });
         */
         $('.mask-number').mask('0#');
-        $('.mask-cep').mask('00000-000');
-        $('.mask-sequencia').mask('00.00', {reverse: true});
-        $('.mask-date').mask('00/00/0000');
-        $('.mask-date-m-y').mask('00/00');
-        $('.mask-date-m-yy').mask('00/0000');
-        $('.mask-hora').mask('00:00');
-        $('.mask-cpf').mask('000.000.000-00', {reverse: true});
-        $('.mask-rg').mask('00.000.000-0', {reverse: true});
-        $('.mask-rne').mask('A.AAA.AAA-A', {reverse: true});
-        $('.mask-crc').mask('AAAAAAAAA-A/A', {reverse: true});
         $('.mask-currency').mask("#.##0,00", {reverse: true});
-        $('.mask-cnpj').mask('00.000.000/0000-00', {reverse: true});
-        $('.mask-taxa').mask('00,00', {reverse: true});
-        //$('.phone_with_ddd').mask('(00) 0000-0000');
-        var SPMaskBehavior = function (val) {
-                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-            },
-            spOptions = {
-                onKeyPress: function(val, e, field, options) {
-                    field.mask(SPMaskBehavior.apply({}, arguments), options);
-                }
-            };
-
-        $('.mask-tel').mask(SPMaskBehavior, spOptions);
-        //
-        var CpfCnpjMaskBehavior = function (val) {
-                return val.replace(/\D/g, '').length <= 11 ? '000.000.000-009' : '00.000.000/0000-00';
-            },
-            cpfCnpjpOptions = {
-                onKeyPress: function(val, e, field, options) {
-                    field.mask(CpfCnpjMaskBehavior.apply({}, arguments), options);
-                }
-            };
-        $('.mask-cpf-cnpj').mask(CpfCnpjMaskBehavior, cpfCnpjpOptions);
-        //
     });
     $('.custom-file-input').on('change', function() {
         let fileName = $(this).val().split('\\').pop();
