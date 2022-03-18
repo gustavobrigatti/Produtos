@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('cadastro.index');
+    return redirect()->route('produtos.index');
 });
 Route::resource('/produtos', 'ProdutoController');
